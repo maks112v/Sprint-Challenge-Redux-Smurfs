@@ -6,6 +6,7 @@ export const FETCH_FAILURE = 'FETCH_FAILURE';
 export const POST_START = 'POST_START';
 export const POST_SUCCESS = 'POST_SUCCESS';
 export const POST_FAILURE = 'POST_FAILURE';
+export const TOGGLE_EDITOR = 'TOGGLE_EDITOR';
 /*
   For this project you'll need at least 2 action creators for the main portion,
    and 2 more for the stretch problem.
@@ -39,20 +40,24 @@ export const getSmurfs = () => dispatch => {
 
 export const addSmurf = data => dispatch => {
   dispatch({
-    type: FETCH_START
+    type: POST_START
   });
   axios
     .post('http://localhost:3333/smurfs', data)
     .then(arr => {
       dispatch({
-        type: FETCH_SUCCESS,
+        type: POST_SUCCESS,
         payload: arr.data
       })
     })
     .catch(err => {
       dispatch({
-        type: FETCH_FAILURE,
+        type: POST_FAILURE,
         payload: err
       })
     })
+}
+
+export const toggleEditor = () => dispatch => {
+  dispatch({type: TOGGLE_EDITOR});
 }

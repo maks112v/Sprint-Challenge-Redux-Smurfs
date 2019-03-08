@@ -4,6 +4,7 @@ import { Container } from 'reactstrap';
 import { connect } from 'react-redux';
 import { getSmurfs } from '../actions';
 import SmurfList from './SmurfList';
+import SmurfForm from './SmurfForm';
 import "bootstrap/dist/css/bootstrap.min.css";
 /*
  to wire this component up you're going to need a few things.
@@ -12,9 +13,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
  `How do I ensure that my component links the state to props?`
  */
 class App extends Component {
-  constructor(props){
-    super(props);
-  }
 
   componentDidMount(){
     this.props.getSmurfs();
@@ -23,6 +21,7 @@ class App extends Component {
   render() {
     return (
       <Container>
+        <SmurfForm />
         <SmurfList />
       </Container>
     );

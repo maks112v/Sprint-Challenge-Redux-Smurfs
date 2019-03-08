@@ -10,7 +10,6 @@ const Smurfs = props => {
   if (props.fetchingSmurfs) {
     return <PreloadTable />;
   }
-  console.log(props)
   return (
     <Table bordered hover>
       <thead>
