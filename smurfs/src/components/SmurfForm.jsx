@@ -10,7 +10,7 @@ import {
 	Input
 } from "reactstrap";
 import { connect } from "react-redux";
-import { addSmurf, toggleEditor } from "../actions";
+import { addSmurf, toggleEditor, deleteSmurf } from "../actions";
 
 class AddSmurf extends Component {
   constructor(props){
@@ -95,14 +95,12 @@ class AddSmurf extends Component {
 					<Card>
 						<CardBody>
 							<h5>
-								{this.state.update
-									? `Updating ${this.state.inputs.name}`
+								{this.props.updatingSmurf !== null
+									? `Updating ${this.props.currentSmurf.name}`
 									: "Add A Friend"}
 							</h5>
 							<form
-								onSubmit={
-									this.state.update ? this.updateHandler : this.submitHandler
-								}
+								onSubmit={this.props.updatingSmurf !== null ? this.updateHandler : this.submitHandler}
 							>
 								<Row>
 									<Col xs='8'>
@@ -141,28 +139,16 @@ class AddSmurf extends Component {
 								</InputGroup>
 								<br />
 								<Button type='Submit' color='success' outline>
-									{this.state.update ? "Update" : "Create"}
+									{this.props.updatingSmurf !== null ? "Update" : "Create"}
 								</Button>
-								{this.state.update ? (
+								{this.props.updatingSmurf !== null ? (
 									<Button
-										type='Submit'
 										className='ml-3'
 										color='danger'
-										onClick={this.deleteHandler}
+										onClick={() => this.props.deleteSmurf(this.props.updatingSmurf)}
 										outline
 									>
 										Delete
-									</Button>
-								) : null}
-								{this.state.update ? (
-									<Button
-										type='Submit'
-										className='ml-3'
-										color='warning'
-										onClick={this.removeUpdate}
-										outline
-									>
-										Clear
 									</Button>
 								) : null}
 							</form>
@@ -176,6 +162,8 @@ class AddSmurf extends Component {
 
 const stateToProps = state => ({
   showEditor: state.showEditor,
+  updatingSmurf: state.updatingSmurf,
+  currentSmurf: state.smurfs[state.updatingSmurf],
 })
 
-export default connect(stateToProps, {addSmurf,toggleEditor})(AddSmurf);
+export default connect(stateToProps, {addSmurf,toggleEditor, deleteSmurf})(AddSmurf);

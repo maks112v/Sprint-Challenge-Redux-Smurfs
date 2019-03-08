@@ -1,7 +1,15 @@
-/*
-  Be sure to import in all of the action types from `../actions`
-*/
-import { FETCH_START, FETCH_SUCCESS, TOGGLE_EDITOR, FETCH_FAILURE, POST_START, POST_SUCCESS } from '../actions'
+import {
+  FETCH_START,
+  FETCH_SUCCESS,
+  TOGGLE_EDITOR,
+  FETCH_FAILURE,
+  POST_START,
+  POST_SUCCESS,
+  POST_FAILURE,
+  TOGGLE_UPDATE,
+  DELETE_START,
+  DELETE_SUCCESS
+} from '../actions'
 
 const initalState = {
   smurfs: [],
@@ -10,7 +18,7 @@ const initalState = {
   updatingSmurf: null,
   deletingSmurf: false,
   showEditor: false,
-  error: null,  
+  error: null,
 }
 
 const reducer = (state = initalState, action) => {
@@ -27,14 +35,15 @@ const reducer = (state = initalState, action) => {
         smurfs: action.payload
       }
     case FETCH_FAILURE:
-      return  {
+      return {
         ...state,
         error: action.payload
       }
-    case TOGGLE_EDITOR: 
+    case TOGGLE_EDITOR:
       return {
         ...state,
         showEditor: !state.showEditor,
+        updatingSmurf: null,
       }
     case POST_START:
       return {
@@ -46,6 +55,31 @@ const reducer = (state = initalState, action) => {
         ...state,
         addingSmurf: false,
         smurfs: action.payload
+      }
+    case POST_FAILURE:
+      return {
+        ...state,
+        addingSmurf: false,
+        error: action.payload
+      }
+    case TOGGLE_UPDATE:
+      return {
+        ...state,
+        showEditor: true,
+        updatingSmurf: action.payload
+      }
+    case DELETE_START:
+      return {
+        ...state,
+        deletingSmurf: true,
+      }
+    case DELETE_SUCCESS:
+      return {
+        ...state,
+        deletingSmurf: false,
+        smurfs: action.payload,
+        showEditor: false,
+        updatingSmurf: null
       }
     default:
       return state

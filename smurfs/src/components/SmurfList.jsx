@@ -6,6 +6,23 @@ import Skeleton from "react-loading-skeleton";
 
 import { connect } from "react-redux";
 
+const SingleUpdate = () => (
+  <tr>
+    <th>
+      <Skeleton />
+    </th>
+    <td>
+      <Skeleton />
+    </td>
+    <td>
+      <Skeleton />
+    </td>
+    <td>
+      <Skeleton />
+    </td>
+  </tr>
+)
+
 const Smurfs = props => {
   if (props.fetchingSmurfs) {
     return <PreloadTable />;
@@ -27,21 +44,8 @@ const Smurfs = props => {
             smurf={smurf}
           />
         ))}
-        {props.isAdding ? (
-          <tr>
-            <th>
-              <Skeleton />
-            </th>
-            <td>
-              <Skeleton />
-            </td>
-            <td>
-              <Skeleton />
-            </td>
-            <td>
-              <Skeleton />
-            </td>
-          </tr>
+        {props.addingSmurf ? (
+          <SingleUpdate />
         ) : null}
       </tbody>
     </Table>
@@ -51,6 +55,8 @@ const Smurfs = props => {
 const stateToProps = state => ({
   smurfs: state.smurfs,
   fetchingSmurfs: state.fetchingSmurfs,
+  addingSmurf: state.addingSmurf,
+  updatingSmurf: state.updatingSmurf,
 });
 
 export default connect(stateToProps)(Smurfs);
